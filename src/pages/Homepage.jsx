@@ -1,10 +1,8 @@
-import "./App.css";
+import heroImage from "../assets/heroImage.jpg";
+import logo from "../assets/logo.svg";
+import Button from "../components/Button";
 
-import heroImage from "./assets/heroImage.jpg";
-import logo from "./assets/logo.svg";
-import Button from "./components/Button";
-
-function App() {
+export default function Homepage() {
   return (
     <>
       <div className="relative mx-8 flex w-full items-start justify-around gap-8">
@@ -36,5 +34,3 @@ function App() {
     </>
   );
 }
-
-export default App;
