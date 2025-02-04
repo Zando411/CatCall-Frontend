@@ -9,13 +9,6 @@
   --color-accent: oklch(69.54% 0.1849 12.48);
 }
 
-#root {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -23,13 +16,10 @@
 
   color: var(--color-black-cat);
   background-color: var(--color-mitten-white);
-}
 
-body {
+  height: 100%;
+  width: 100%;
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
+  padding: 0;
 
+}
