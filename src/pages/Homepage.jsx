@@ -9,7 +9,7 @@ export default function Homepage() {
       <div className="mx-auto max-w-[1440px] px-8 text-center">
         <body className="m-0 flex min-h-screen min-w-[320px] items-center justify-center">
           <div className="relative mx-8 flex w-full items-start justify-around gap-8">
-            <NavLink to="/sign-in" end>
+            <NavLink to="/auth" end>
               <Button className="absolute -top-20 right-0" defaults={true}>
                 Sign In
               </Button>
@@ -19,7 +19,7 @@ export default function Homepage() {
             <div className="mt-20 w-full basis-3/5">
               <div className="flex w-fit flex-col items-end justify-center gap-2">
                 <NavLink to="/" end>
-                  <img src={logo} alt="CatCall Logo" className="" />{" "}
+                  <img src={logo} alt="CatCall Logo" className="" />
                 </NavLink>
                 <h2 className="text-3xl font-extrabold">
                   Your <span className="text-accent">purrrr</span>fect cat is
