@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 export default function AuthForm() {
   const [email, setEmail] = useState("");
@@ -7,9 +8,24 @@ export default function AuthForm() {
   // const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(email, password);
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const response = await axios.post("http://localhost:3014/login", {
+        email,
+        password,
+      });
+
+      console.log(response.data.message);
+      setError("");
+      alert("Login successful");
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message); // Display error from server
+      } else {
+        setError("An error occurred while logging in");
+      }
+    }
   };
 
   return (
