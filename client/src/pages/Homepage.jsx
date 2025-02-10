@@ -10,7 +10,7 @@ export default function Homepage() {
         <body className="m-0 flex min-h-screen min-w-[320px] items-center justify-center">
           <div className="relative mx-8 flex w-full items-start justify-around gap-8">
             <NavLink to="/auth" end>
-              <Button className="absolute -top-20 right-0" defaults={true}>
+              <Button className="absolute -top-14 right-0" defaults={true}>
                 Sign In
               </Button>
             </NavLink>
