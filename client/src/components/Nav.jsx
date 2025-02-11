@@ -11,13 +11,15 @@ export default function Nav() {
       <NavLink to="/dashboard" end>
         <img src={logo} alt="CatCall Logo" className="h-16" />
       </NavLink>
-      <div className="absolute top-4 right-4 flex h-12 w-12 items-center justify-center overflow-hidden rounded-full shadow-md outline-2 outline-white">
-        <img
-          src={avatarImage}
-          alt="Avatar"
-          className="color-white h-2/3 w-2/3 object-cover"
-        />
-      </div>
+      <NavLink to="/profile" end>
+        <div className="absolute top-4 right-4 flex h-12 w-12 items-center justify-center overflow-hidden rounded-full shadow-md outline-2 outline-white">
+          <img
+            src={avatarImage}
+            alt="Avatar"
+            className="color-white h-2/3 w-2/3 object-cover"
+          />
+        </div>
+      </NavLink>
     </nav>
   );
 }
