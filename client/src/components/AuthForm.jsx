@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthForm() {
   const [email, setEmail] = useState("");
@@ -7,6 +8,8 @@ export default function AuthForm() {
   // for use with sign up later
   // const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     try {
@@ -18,7 +21,7 @@ export default function AuthForm() {
 
       console.log(response.data.message);
       setError("");
-      alert("Login successful");
+      navigate("/dashboard");
     } catch (error) {
       if (error.response) {
         setError(error.response.data.message); // Display error from server
