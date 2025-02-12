@@ -7,7 +7,7 @@ export default function Nav() {
   const avatarImage = profileIcon;
 
   return (
-    <nav className="bg-accent absolute top-0 flex h-20 w-full items-center justify-center px-8 text-white">
+    <nav className="bg-accent absolute top-0 z-50 flex h-20 w-full items-center justify-center px-8 text-white">
       <NavLink to="/dashboard" end>
         <img src={logo} alt="CatCall Logo" className="h-16" />
       </NavLink>
