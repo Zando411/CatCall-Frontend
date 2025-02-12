@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.use('/catPhotos', express.static('uploads'));
+app.use('/catPhotos', express.static('catPhotos'));
 
 // json cats storage
 
@@ -47,7 +47,7 @@ const writeCats = (data) => {
 
 app.post('/cats', upload.single('image'), (req, res) => {
   const { name, age, sex, breed, city, state } = req.body;
-  const image = `/uploads/${req.file.filename}`;
+  const image = `/catPhotos/${req.file.filename}`;
 
   if (!name || !age || !sex || !breed || !city || !state || !image) {
     return res.status(400).json({ message: 'All fields are required' });
@@ -72,7 +72,7 @@ app.post('/cats', upload.single('image'), (req, res) => {
 });
 
 app.get('/cats', (req, res) => {
-  const cats = readCatsFromFile();
+  const cats = readCats();
   res.json(cats);
 });
 
