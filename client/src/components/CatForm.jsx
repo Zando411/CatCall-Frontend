@@ -142,8 +142,8 @@ export default function CatForm({ show, handleClose }) {
                 value={catInfo.sex}
                 onChange={handleChange}
                 options={[
-                  { label: "Male", value: "male" },
-                  { label: "Female", value: "female" },
+                  { label: "Male", value: "Male" },
+                  { label: "Female", value: "Female" },
                 ]}
               />
 
@@ -154,17 +154,17 @@ export default function CatForm({ show, handleClose }) {
                 value={catInfo.breed}
                 onChange={handleChange}
                 options={[
-                  { label: "Bengal", value: "bengal" },
-                  { label: "Longhair", value: "longhair" },
-                  { label: "Maine Coon", value: "maine_coon" },
-                  { label: "Persian", value: "persian" },
-                  { label: "Ragdoll", value: "ragdoll" },
-                  { label: "Russian Blue", value: "russian_blue" },
-                  { label: "Shorthair", value: "shorthair" },
-                  { label: "Siamese", value: "siamese" },
-                  { label: "Siberian", value: "siberian" },
-                  { label: "Sphynx", value: "sphynx" },
-                  { label: "Other", value: "other" },
+                  { label: "Bengal", value: "Bengal" },
+                  { label: "Longhair", value: "Longhair" },
+                  { label: "Maine Coon", value: "Maine Coon" },
+                  { label: "Persian", value: "Persian" },
+                  { label: "Ragdoll", value: "Ragdoll" },
+                  { label: "Russian Blue", value: "Russian Blue" },
+                  { label: "Shorthair", value: "Shorthair" },
+                  { label: "Siamese", value: "Siamese" },
+                  { label: "Siberian", value: "Siberian" },
+                  { label: "Sphynx", value: "Sphynx" },
+                  { label: "Other", value: "Other" },
                 ]}
               />
             </>
