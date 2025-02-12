@@ -2,19 +2,10 @@
   {
     "name": "Chaos",
     "age": "6",
-    "sex": "male",
-    "breed": "shorthair",
+    "sex": "Male",
+    "breed": "Shorthair",
     "city": "Corvallis",
     "state": "Oregon",
-    "imageUrl": "/uploads/1739339522313.jpg"
-  },
-  {
-    "name": "Fluffy",
-    "age": "3",
-    "sex": "female",
-    "breed": "maine_coon",
-    "city": "Corvallis",
-    "state": "Oregon",
-    "imageUrl": "/uploads/1739339573943.avif"
+    "imageUrl": "/catPhotos/1739342114967.jpg"
   }
 ]
