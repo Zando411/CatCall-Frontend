@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DropdownField from "./DropdownField";
 import InputField from "./InputField";
+import axios from "axios";
 
 export default function CatForm({ show, handleClose }) {
   const [step, setStep] = useState(1);
@@ -32,11 +33,9 @@ export default function CatForm({ show, handleClose }) {
       age: "",
       sex: "",
       breed: "",
-      color: "",
       city: "",
       state: "",
       image: null,
-      description: "",
     });
     setStep(1);
     setError(null);
@@ -55,7 +54,7 @@ export default function CatForm({ show, handleClose }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (
@@ -72,7 +71,32 @@ export default function CatForm({ show, handleClose }) {
     }
 
     console.log(catInfo);
-    closeForm();
+
+    const formData = new FormData();
+    Object.entries(catInfo).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3014/cats",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+
+      if (response.status === 201) {
+        console.log("Success:", response.data);
+        alert("Cat added successfully!");
+        closeForm();
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setError("Something went wrong. Please try again.");
+    }
   };
 
   if (!show) {
