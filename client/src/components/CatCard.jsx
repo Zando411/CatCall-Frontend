@@ -26,14 +26,14 @@ export default function CatCards() {
 
   const handleLikeAction = () => {
     // add likes later
+    console.log("Liked cat:", cats[currentIndex].name);
     handleAction();
-    console.log("Liked!");
   };
 
   const handleDislikeAction = () => {
     // add dislikes later
+    console.log("Disliked cat:", cats[currentIndex].name);
     handleAction();
-    console.log("Disliked!");
   };
 
   return (
@@ -43,11 +43,11 @@ export default function CatCards() {
         <div className="relative w-96 overflow-hidden rounded-lg bg-white text-black shadow-lg">
           {/* Cat Image */}
           <div className="relative" onClick={() => console.log("View more...")}>
-            <div className="absolute inset-0 cursor-pointer bg-gradient-to-t from-black/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
             <img
               src={`http://localhost:3014${cats[currentIndex].imageUrl}`}
               alt={cats[currentIndex].name}
-              className="h-96 w-fit object-cover"
+              className="h-96 w-full object-cover object-top"
             />
             {/* <p className="absolute bottom-2 left-2 z-40 text-sm text-white">
               Tap to view more...
