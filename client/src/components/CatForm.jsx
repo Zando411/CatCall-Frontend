@@ -107,7 +107,7 @@ export default function CatForm({ show, handleClose }) {
     <div className="text-black-cat fixed inset-0 flex items-center justify-center bg-black/75 pb-20">
       <div className="bg-mitten-white relative w-full max-w-md rounded-lg p-6 shadow-lg">
         <span
-          className="absolute top-4 right-4 float-right cursor-pointer text-2xl text-gray-600"
+          className="hover:text-accent absolute top-4 right-4 float-right cursor-pointer text-2xl text-gray-600 transition-colors duration-200 hover:scale-110"
           onClick={closeForm}
         >
           &times;
@@ -264,7 +264,7 @@ export default function CatForm({ show, handleClose }) {
               <button
                 type="button"
                 onClick={handleBack}
-                className="text-black-cat cursor-pointer rounded-md bg-gray-100 px-4 py-2 transition-all duration-200 hover:bg-gray-300"
+                className="text-black-cat cursor-pointer rounded-md bg-gray-100 px-4 py-2 transition-all duration-200 hover:scale-105 hover:bg-gray-300"
               >
                 Back
               </button>
@@ -273,7 +273,7 @@ export default function CatForm({ show, handleClose }) {
               <button
                 type="button"
                 onClick={handleNext}
-                className="bg-secondary hover:bg-primary ml-auto cursor-pointer rounded-md px-6 py-2 text-white transition-all duration-200 hover:shadow-2xl"
+                className="bg-secondary hover:bg-primary ml-auto cursor-pointer rounded-md px-6 py-2 text-white transition-all duration-200 hover:scale-105 hover:shadow-2xl"
               >
                 Next
               </button>
@@ -290,7 +290,7 @@ export default function CatForm({ show, handleClose }) {
             {step === 2 && (
               <button
                 type="submit"
-                className="text-mitten-white bg-accent hover:bg-accent-dark cursor-pointer rounded-md px-4 py-2 transition-all duration-200"
+                className="text-mitten-white bg-accent hover:bg-accent-dark cursor-pointer rounded-md px-4 py-2 transition-all duration-200 hover:scale-105"
               >
                 Submit
               </button>
