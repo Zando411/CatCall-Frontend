@@ -46,7 +46,7 @@ const writeCats = (data) => {
 };
 
 app.post('/cats', upload.single('image'), (req, res) => {
-  const { name, age, sex, breed, city, state } = req.body;
+  const { name, age, sex, breed, color, city, state } = req.body;
   const image = `/catPhotos/${req.file.filename}`;
 
   if (!name || !age || !sex || !breed || !city || !state || !image) {
@@ -58,6 +58,7 @@ app.post('/cats', upload.single('image'), (req, res) => {
     age,
     sex,
     breed,
+    color,
     city,
     state,
     imageUrl: image,
@@ -88,7 +89,11 @@ app.post('/login', (req, res) => {
   if (email === mockUser.email && password === mockUser.password) {
     res.status(200).send({ message: 'Login successful' });
   } else {
-    res.status(401).send({ message: 'Login failed' });
+    if (email !== mockUser.email) {
+      res.status(401).send({ message: 'Invalid email' });
+    } else {
+      res.status(401).send({ message: 'Invalid password' });
+    }
   }
 });
 
