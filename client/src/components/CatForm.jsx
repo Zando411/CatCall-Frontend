@@ -6,6 +6,7 @@ import axios from "axios";
 export default function CatForm({ show, handleClose }) {
   const [step, setStep] = useState(1);
   const [error, setError] = useState(null);
+  const [photoError, setPhotoError] = useState(null);
 
   const [catInfo, setCatInfo] = useState({
     name: "",
@@ -33,6 +34,7 @@ export default function CatForm({ show, handleClose }) {
       age: "",
       sex: "",
       breed: "",
+      color: "",
       city: "",
       state: "",
       image: null,
@@ -48,14 +50,34 @@ export default function CatForm({ show, handleClose }) {
   };
 
   const handleImageUpload = (e) => {
+    setPhotoError(null);
+    setCatInfo({ ...catInfo, image: null });
     const file = e.target.files[0];
     if (file) {
+      if (!file.type.match("image.*")) {
+        setPhotoError("Please upload an image file (jpg, jpeg, png).");
+        return;
+      }
+
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        setPhotoError(
+          "File size too large. Please upload an image smaller than 2MB.",
+        );
+        return;
+      }
+
       setCatInfo({ ...catInfo, image: file });
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (photoError !== null) {
+      setError(photoError);
+      return;
+    }
 
     if (
       !catInfo.name ||
@@ -67,6 +89,11 @@ export default function CatForm({ show, handleClose }) {
       !catInfo.image
     ) {
       setError("Please fill out all required fields before submitting.");
+      return;
+    }
+
+    if (catInfo.age < 0 || catInfo.age > 30) {
+      setError("Please enter a valid age (between 0 and 30)");
       return;
     }
 
@@ -107,11 +134,11 @@ export default function CatForm({ show, handleClose }) {
       <div className="bg-mitten-white relative w-full max-w-md rounded-lg p-6 shadow-lg">
         <span
           className="hover:text-accent absolute top-4 right-4 float-right cursor-pointer text-2xl text-gray-600 transition-colors duration-200 hover:scale-110"
-          onClick={closeForm}
+          onClick={handleClose}
         >
           &times;
         </span>
-        <h2 className="mb-4 text-2xl">Cat Information</h2>
+        <h2 className="mb-4 text-2xl">Upload your cat!</h2>
         <form onSubmit={handleSubmit} noValidate className="">
           {step === 1 && (
             <>
@@ -166,6 +193,23 @@ export default function CatForm({ show, handleClose }) {
                   { label: "Other", value: "Other" },
                 ]}
               />
+
+              {/* <DropdownField
+                label="Color"
+                id="formCatColor"
+                name="color"
+                value={catInfo.color}
+                onChange={handleChange}
+                options={[
+                  { label: "Black", value: "black" },
+                  { label: "White", value: "white" },
+                  { label: "Gray", value: "gray" },
+                  { label: "Orange", value: "orange" },
+                  { label: "Calico", value: "calico" },
+                  { label: "Tabby", value: "tabby" },
+                  { label: "Other", value: "other" },
+                ]}
+              /> */}
             </>
           )}
 
@@ -194,16 +238,26 @@ export default function CatForm({ show, handleClose }) {
             <>
               {/* Image Upload Field */}
               <div className="mb-4">
-                <label htmlFor="formCatImage" className="block text-gray-700">
-                  Upload Image
-                </label>
+                <div className="flex justify-between">
+                  <label htmlFor="formCatImage" className="flex">
+                    Upload Image
+                  </label>
+                  <div className="group relative">
+                    <p className="cursor-pointer text-gray-600 hover:scale-105 hover:text-gray-800">
+                      ?
+                    </p>
+                    <div className="absolute top-1/2 left-full w-max -translate-y-1/2 translate-x-2 transform rounded bg-gray-700 px-2 py-1 text-sm text-white opacity-0 shadow-lg group-hover:opacity-100">
+                      File must be an image (jpg, jpeg, png) and less than 2MB.
+                    </div>
+                  </div>
+                </div>
                 <input
                   type="file"
                   id="formCatImage"
                   name="image"
                   accept="image/*"
                   onChange={handleImageUpload}
-                  className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="focus:outline-accent mt-1 w-full cursor-pointer rounded-md border border-gray-400 p-1 px-2 shadow-sm placeholder:text-sm"
                   required
                 />
               </div>
@@ -211,11 +265,11 @@ export default function CatForm({ show, handleClose }) {
               {/* Image Preview */}
               {catInfo.image && (
                 <div className="mb-4">
-                  <p className="text-gray-700">Preview:</p>
+                  <p className="flex">Preview:</p>
                   <img
                     src={URL.createObjectURL(catInfo.image)}
                     alt="Cat Preview"
-                    className="mt-2 max-h-40 rounded-md border border-gray-300"
+                    className="mt-2 max-h-60 rounded-md border border-gray-300"
                   />
                 </div>
               )}
