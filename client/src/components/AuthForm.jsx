@@ -42,6 +42,9 @@ export default function AuthForm() {
           <h3 className="font-medium">
             Enter your email and password below to sign in
           </h3>
+          <h4 className="text-sm font-medium text-gray-500">
+            We'll never send you spam or share your email address.
+          </h4>
         </div>
         <form
           className="mt-2 flex w-full flex-col gap-1"
