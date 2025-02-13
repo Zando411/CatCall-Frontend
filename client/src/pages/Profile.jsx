@@ -22,7 +22,7 @@ export default function Profile() {
             {/* headers for my cats and saved cats */}
             <div className="mt-4 flex items-center justify-center gap-12 text-5xl">
               <h1
-                className={`cursor-pointer transition-opacity duration-300 ${
+                className={`hidden cursor-pointer transition-opacity duration-300 ${
                   viewMyCats ? "opacity-100" : "opacity-30"
                 }`}
                 onClick={viewMyCats ? undefined : flipView}
@@ -31,7 +31,7 @@ export default function Profile() {
               </h1>
               <h1
                 className={`cursor-pointer transition-opacity duration-300 ${
-                  viewMyCats ? "opacity-30" : "opacity-100"
+                  viewMyCats ? "opacity-0" : "opacity-100"
                 }`}
                 onClick={!viewMyCats ? undefined : flipView}
               >
