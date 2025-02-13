@@ -1,9 +1,14 @@
+import { useEffect } from "react";
 import heroImage from "../assets/heroImage.jpg";
 import logo from "../assets/logo.svg";
 import Button from "../components/Button";
 import { NavLink } from "react-router-dom";
 
 export default function Homepage() {
+  useEffect(() => {
+    localStorage.removeItem("CatCallLoggedInUser");
+  }, []);
+
   return (
     <>
       <div className="mx-auto max-w-[1440px] px-8 text-center">

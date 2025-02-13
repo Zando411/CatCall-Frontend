@@ -7,6 +7,7 @@ import Homepage from "./pages/homepage.jsx";
 import AuthPage from "./pages/AuthPage.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Profile from "./pages/Profile.jsx";
+import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -14,8 +15,11 @@ createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="auth" element={<AuthPage />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="profile" element={<Profile />} />
+        {/* Protected routes */}
+        <Route element={<ProtectedRoutes />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   </StrictMode>,

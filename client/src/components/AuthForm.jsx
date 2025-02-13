@@ -20,6 +20,9 @@ export default function AuthForm() {
       });
 
       console.log(response.data.message);
+
+      localStorage.setItem("CatCallLoggedInUser", response.data.email);
+
       setError("");
       navigate("/dashboard");
     } catch (error) {
