@@ -27,11 +27,13 @@ export default function CatCards() {
   const handleLikeAction = () => {
     // add likes later
     handleAction();
+    console.log("Liked!");
   };
 
   const handleDislikeAction = () => {
     // add dislikes later
     handleAction();
+    console.log("Disliked!");
   };
 
   return (
@@ -74,13 +76,13 @@ export default function CatCards() {
         <div className="mt-6 flex gap-8">
           <button
             onClick={handleDislikeAction}
-            className="bg-mitten-white flex h-20 w-20 cursor-pointer items-center justify-center rounded-full shadow-lg transition-all hover:bg-red-500"
+            className="bg-mitten-white flex h-20 w-20 cursor-pointer items-center justify-center rounded-full shadow-lg transition-all hover:scale-105 hover:bg-red-500"
           >
             <img src={thumbsDown} alt="Dislike" className="mt-2 mr-1 w-12" />
           </button>
           <button
             onClick={handleLikeAction}
-            className="bg-mitten-white flex h-20 w-20 cursor-pointer items-center justify-center rounded-full shadow-lg transition-all hover:bg-green-500"
+            className="bg-mitten-white flex h-20 w-20 cursor-pointer items-center justify-center rounded-full shadow-lg transition-all hover:scale-105 hover:bg-green-500"
           >
             <img src={thumbsUp} alt="Like" className="mb-1 ml-1 w-12" />
           </button>
