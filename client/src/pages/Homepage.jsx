@@ -28,7 +28,7 @@ export default function Homepage() {
                 </NavLink>
                 <h2 className="text-3xl font-extrabold">
                   Your <span className="text-accent">purrrr</span>fect cat is
-                  just a <span className="text-secondary">swipe</span> away
+                  just a <span className="text-secondary">like</span> away
                 </h2>
                 <Button className={"primary"} defaults={true}>
                   Join Now
