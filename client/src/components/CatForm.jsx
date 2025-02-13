@@ -90,7 +90,6 @@ export default function CatForm({ show, handleClose }) {
 
       if (response.status === 201) {
         console.log("Success:", response.data);
-        alert("Cat added successfully!");
         closeForm();
       }
     } catch (error) {
