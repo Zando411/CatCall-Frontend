@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
@@ -6,7 +7,7 @@ const fs = require('fs');
 const cats = require('./cats.json');
 
 const app = express();
-const port = 3014;
+const PORT = process.env.PORT || 3014;
 
 app.use(cors());
 app.use(express.json());
@@ -97,6 +98,6 @@ app.post('/login', (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server listening at http://localhost:${PORT}`);
 });
