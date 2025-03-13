@@ -78,25 +78,25 @@ app.get('/cats', (req, res) => {
   res.json(cats);
 });
 
-// login section
-const mockUser = {
-  email: 'test@example.com',
-  password: 'password',
-};
+// // login section
+// const mockUser = {
+//   email: 'test@example.com',
+//   password: 'password',
+// };
 
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
+// app.post('/login', (req, res) => {
+//   const { email, password } = req.body;
 
-  if (email === mockUser.email && password === mockUser.password) {
-    res.status(200).send({ message: 'Login successful' });
-  } else {
-    if (email !== mockUser.email) {
-      res.status(401).send({ message: 'Invalid email' });
-    } else {
-      res.status(401).send({ message: 'Invalid password' });
-    }
-  }
-});
+//   if (email === mockUser.email && password === mockUser.password) {
+//     res.status(200).send({ message: 'Login successful' });
+//   } else {
+//     if (email !== mockUser.email) {
+//       res.status(401).send({ message: 'Invalid email' });
+//     } else {
+//       res.status(401).send({ message: 'Invalid password' });
+//     }
+//   }
+// });
 
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);
