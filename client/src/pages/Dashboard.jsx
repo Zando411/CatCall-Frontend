@@ -10,9 +10,9 @@ export default function Dashboard() {
       <div className="bg-black-cat text-white">
         <Nav></Nav>
         <div className="mx-auto max-w-[1440px] px-8 text-center">
-          <body className="flex min-h-screen min-w-[320px] flex-col items-center justify-center p-4 pt-24">
+          <div className="flex min-h-screen min-w-[320px] flex-col items-center justify-center p-4 pt-24">
             <CatCard />
-          </body>
+          </div>
         </div>
       </div>
     </>
