@@ -195,6 +195,15 @@ export default function PreferencesForm() {
                     placeholder="Oregon"
                   />
                 </div>
+                <InputField
+                  label="Search Radius (in miles)"
+                  id="formCatRadius"
+                  type="number"
+                  name="radius"
+                  value={preferences.radius}
+                  onChange={handleChange}
+                  placeholder="50"
+                />
                 {error && <p className="mb-2 text-red-600">{error}</p>}
               </>
 
