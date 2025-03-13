@@ -13,8 +13,8 @@ export default function PreferencesForm() {
   const [pullPreferences, setPullPreferences] = useState(true);
 
   const [preferences, setPreferences] = useState({
-    ageMin: "",
-    ageMax: "",
+    minAge: "",
+    maxAge: "",
     sex: "",
     breed: "",
     color: "",
@@ -48,7 +48,7 @@ export default function PreferencesForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (preferences.ageMin < 0 || preferences.ageMax > 30) {
+    if (preferences.minAge < 0 || preferences.maxAge > 30) {
       setError("Please enter a valid age range (between 0 and 30)");
       return;
     }
@@ -62,8 +62,8 @@ export default function PreferencesForm() {
       if (response.data.message === "Preferences updated") {
         console.log("Success:", response.data.message);
         setPreferences({
-          ageMin: "",
-          ageMax: "",
+          minAge: "",
+          maxAge: "",
           sex: "",
           breed: "",
           color: "",
@@ -108,8 +108,8 @@ export default function PreferencesForm() {
                     label="Age Min."
                     id="formCatAgeMin"
                     type="number"
-                    name="ageMin"
-                    value={preferences.ageMin}
+                    name="minAge"
+                    value={preferences.minAge}
                     onChange={handleChange}
                     placeholder="2"
                   />
@@ -118,8 +118,8 @@ export default function PreferencesForm() {
                     label="Age Max."
                     id="formCatAgeMax"
                     type="number"
-                    name="ageMax"
-                    value={preferences.ageMax}
+                    name="maxAge"
+                    value={preferences.maxAge}
                     onChange={handleChange}
                     placeholder="8"
                   />

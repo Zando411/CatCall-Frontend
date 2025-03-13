@@ -13,7 +13,7 @@ export default function CatForm({ show, handleClose }) {
 
   const [catInfo, setCatInfo] = useState({
     name: "",
-    age: "",
+    age: null,
     sex: "",
     breed: "",
     color: "",
@@ -33,7 +33,7 @@ export default function CatForm({ show, handleClose }) {
   const closeForm = () => {
     setCatInfo({
       name: "",
-      age: "",
+      age: null,
       sex: "",
       breed: "",
       color: "",
