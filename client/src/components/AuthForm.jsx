@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const AUTH_URL = import.meta.env.VITE_AUTH_URL;
+
 export default function AuthForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,14 +16,33 @@ export default function AuthForm() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const response = await axios.post("http://localhost:3014/login", {
+      const userCheck = await axios.post(`${AUTH_URL}/api/checkUser`, {
         email,
-        password,
       });
+      console.log(userCheck.data.message);
 
-      console.log(response.data.message);
+      if (userCheck.data.message === "User exists") {
+        const loginResponse = await axios.post(`${AUTH_URL}/api/login`, {
+          email,
+          password,
+        });
 
-      localStorage.setItem("CatCallLoggedInUser", response.data.email);
+        if (loginResponse.data.message !== "Login successful") {
+          setError(loginResponse.data.message);
+          return;
+        }
+      } else if (userCheck.data.message === "User does not exist") {
+        const signUpResponse = await axios.post(`${AUTH_URL}/api/signup`, {
+          email,
+          password,
+        });
+
+        if (signUpResponse.data.message !== "User created successfully") {
+          setError(signUpResponse.data.message);
+          return;
+        }
+      }
+      localStorage.setItem("CatCallLoggedInUser", email);
 
       setError("");
       navigate("/dashboard");
