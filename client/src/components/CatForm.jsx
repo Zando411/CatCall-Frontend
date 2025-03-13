@@ -3,6 +3,9 @@ import DropdownField from "./DropdownField";
 import InputField from "./InputField";
 import axios from "axios";
 
+const CAT_DB_URL = import.meta.env.VITE_CAT_DB_URL;
+const userID = localStorage.getItem("CatCallLoggedInUser");
+
 export default function CatForm({ show, handleClose }) {
   const [step, setStep] = useState(1);
   const [error, setError] = useState(null);
@@ -17,7 +20,6 @@ export default function CatForm({ show, handleClose }) {
     city: "",
     state: "",
     image: null,
-    description: "",
   });
 
   const handleNext = () => {
@@ -97,16 +99,18 @@ export default function CatForm({ show, handleClose }) {
       return;
     }
 
-    console.log(catInfo);
-
+    // all form data fields need to be before image is parsed
     const formData = new FormData();
+    formData.append("owner", userID.toString());
     Object.entries(catInfo).forEach(([key, value]) => {
       formData.append(key, value);
     });
 
+    console.log([...formData.entries()]);
+
     try {
       const response = await axios.post(
-        "http://localhost:3014/cats",
+        `${CAT_DB_URL}/api/uploadCat`,
         formData,
         {
           headers: {
@@ -115,12 +119,12 @@ export default function CatForm({ show, handleClose }) {
         },
       );
 
-      if (response.status === 201) {
+      if (response.data.message === "Cat uploaded") {
         console.log("Success:", response.data);
         closeForm();
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error:", error.response.data.error);
       setError("Something went wrong. Please try again.");
     }
   };
@@ -130,7 +134,7 @@ export default function CatForm({ show, handleClose }) {
   }
 
   return (
-    <div className="text-black-cat fixed inset-0 flex items-center justify-center bg-black/75 pb-20">
+    <div className="text-black-cat fixed inset-0 flex items-center justify-center bg-black/75 py-20">
       <div className="bg-mitten-white relative w-full max-w-md rounded-lg p-6 shadow-lg">
         <span
           className="hover:text-accent absolute top-4 right-4 float-right cursor-pointer text-2xl text-gray-600 transition-colors duration-200 hover:scale-110"
@@ -151,27 +155,29 @@ export default function CatForm({ show, handleClose }) {
                 placeholder="Mr. Whiskers"
               />
 
-              <InputField
-                label="Age"
-                id="formCatAge"
-                type="number"
-                name="age"
-                value={catInfo.age}
-                onChange={handleChange}
-                placeholder="3"
-              />
+              <div className="grid grid-cols-2 gap-4">
+                <InputField
+                  label="Age"
+                  id="formCatAge"
+                  type="number"
+                  name="age"
+                  value={catInfo.age}
+                  onChange={handleChange}
+                  placeholder="3"
+                />
 
-              <DropdownField
-                label="Sex"
-                id="formCatSex"
-                name="sex"
-                value={catInfo.sex}
-                onChange={handleChange}
-                options={[
-                  { label: "Male", value: "Male" },
-                  { label: "Female", value: "Female" },
-                ]}
-              />
+                <DropdownField
+                  label="Sex"
+                  id="formCatSex"
+                  name="sex"
+                  value={catInfo.sex}
+                  onChange={handleChange}
+                  options={[
+                    { label: "Male", value: "Male" },
+                    { label: "Female", value: "Female" },
+                  ]}
+                />
+              </div>
 
               <DropdownField
                 label="Breed"
@@ -194,22 +200,22 @@ export default function CatForm({ show, handleClose }) {
                 ]}
               />
 
-              {/* <DropdownField
+              <DropdownField
                 label="Color"
                 id="formCatColor"
                 name="color"
                 value={catInfo.color}
                 onChange={handleChange}
                 options={[
-                  { label: "Black", value: "black" },
-                  { label: "White", value: "white" },
-                  { label: "Gray", value: "gray" },
-                  { label: "Orange", value: "orange" },
-                  { label: "Calico", value: "calico" },
-                  { label: "Tabby", value: "tabby" },
-                  { label: "Other", value: "other" },
+                  { label: "Black", value: "Black" },
+                  { label: "White", value: "White" },
+                  { label: "Gray", value: "Gray" },
+                  { label: "Orange", value: "Orange" },
+                  { label: "Calico", value: "Calico" },
+                  { label: "Tabby", value: "Tabby" },
+                  { label: "Other", value: "Other" },
                 ]}
-              /> */}
+              />
             </>
           )}
 
@@ -269,7 +275,7 @@ export default function CatForm({ show, handleClose }) {
                   <img
                     src={URL.createObjectURL(catInfo.image)}
                     alt="Cat Preview"
-                    className="mt-2 max-h-60 rounded-md border border-gray-300"
+                    className="mt-2 max-h-50 rounded-md border border-gray-300"
                   />
                 </div>
               )}
