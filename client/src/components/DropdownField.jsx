@@ -16,9 +16,9 @@ export default function DropdownField({
         name={name}
         value={value || ""}
         onChange={onChange}
-        className={`focus:outline-accent focus:border-accent focus:ring-accent $ mt-1 w-full rounded-md border border-gray-400 p-1 px-2 shadow-sm`}
+        className={`focus:outline-accent focus:border-accent focus:ring-accent $ mt-1 w-full rounded-md border border-gray-400 px-2 py-[5px] shadow-sm placeholder:text-sm`}
       >
-        <option value="" disabled className="">
+        <option value="" className="">
           Select {label}
         </option>
         {options.map((option) => (
