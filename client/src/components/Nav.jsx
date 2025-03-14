@@ -4,7 +4,10 @@ import logo from "../assets/outlinedLogo.svg";
 import profileIcon from "../assets/profile.svg";
 import PreferencesForm from "./preferencesForm";
 
-export default function Nav() {
+const userID = localStorage.getItem("CatCallLoggedInUser");
+console.log(userID);
+
+export default function Nav({ onPreferencesUpdate }) {
   const avatarImage = profileIcon;
 
   return (
@@ -13,7 +16,7 @@ export default function Nav() {
         <img src={logo} alt="CatCall Logo" className="h-16" />
       </NavLink>
       <div className="absolute top-4 right-4 flex items-center justify-center gap-4">
-        <PreferencesForm />
+        <PreferencesForm onPreferencesUpdate={onPreferencesUpdate} />
         <NavLink to="/profile" end>
           <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full shadow-md outline-2 outline-white">
             <img
