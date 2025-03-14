@@ -9,19 +9,19 @@ const FAVORITES_SERVICE_URL = import.meta.env.VITE_FAVORITES_SERVICE_URL;
 const CAT_DB_URL = import.meta.env.VITE_CAT_DB_URL;
 
 export default function CatCards() {
-  const hasFetched = useRef(false);
   const [cats, setCats] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
   const [noMoreCats, setNoMoreCats] = useState(false);
-  const LIMIT = 5;
+  const hasFetched = useRef(false);
+  // const [page, setPage] = useState(1); pagination
+  // const LIMIT = 5; pagination
 
   const { email } = useContext(AuthContext);
   const userID = email;
 
-  const fetchCats = async (nextPage) => {
+  const fetchCats = async () => {
     if (!userID) {
       setError("User ID is missing");
       return;
@@ -32,15 +32,15 @@ export default function CatCards() {
       const response = await axios.get(
         `${RECOMMENDER_SERVICE_URL}/api/recommend`,
         {
-          params: { userID, page: nextPage, limit: LIMIT },
+          params: { userID },
         },
       );
 
       if (response.data.recommendedCats.length === 0) {
         setNoMoreCats(true);
       } else {
-        setCats((prevCats) => [...prevCats, ...response.data.recommendedCats]);
-        setPage(nextPage);
+        setCats(response.data.recommendedCats);
+        // setPage(nextPage); pagination
       }
     } catch (error) {
       console.error("Error fetching cats:", error);
@@ -52,10 +52,7 @@ export default function CatCards() {
 
   // Get recommended cats on load
   useEffect(() => {
-    if (!hasFetched.current) {
-      fetchCats(1);
-      hasFetched.current = true;
-    }
+    fetchCats();
   }, []);
 
   // Handle Like & Dislike actions (Moves to next cat)
@@ -73,11 +70,11 @@ export default function CatCards() {
       }
     }
 
-    if (currentIndex + 1 >= cats.length && !noMoreCats) {
-      fetchCats(page + 1);
+    if (currentIndex - 1 >= cats.length) {
+      setNoMoreCats(true);
+    } else {
+      setCurrentIndex((prevIndex) => prevIndex + 1);
     }
-
-    setCurrentIndex((prevIndex) => prevIndex + 1);
   };
 
   return (
