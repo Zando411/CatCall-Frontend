@@ -1,13 +1,14 @@
-import React from "react";
+import { useContext } from "react";
+import { AuthContext } from "../utils/AuthContext";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/outlinedLogo.svg";
 import profileIcon from "../assets/profile.svg";
 import PreferencesForm from "./preferencesForm";
 
-const userID = localStorage.getItem("CatCallLoggedInUser");
-console.log(userID);
-
 export default function Nav({ onPreferencesUpdate }) {
+  const { email } = useContext(AuthContext);
+  const userID = email;
+  console.log(userID);
   const avatarImage = profileIcon;
 
   return (

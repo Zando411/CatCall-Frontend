@@ -5,14 +5,10 @@ import Button from "../components/Button";
 import { NavLink } from "react-router-dom";
 
 export default function Homepage() {
-  useEffect(() => {
-    localStorage.removeItem("CatCallLoggedInUser");
-  }, []);
-
   return (
     <>
       <div className="mx-auto max-w-[1440px] px-8 text-center">
-        <body className="m-0 flex min-h-screen min-w-[320px] items-center justify-center">
+        <div className="m-0 flex min-h-screen min-w-[320px] items-center justify-center">
           <div className="relative mx-8 flex w-full items-start justify-around gap-8">
             <NavLink to="/auth" end>
               <Button className="absolute -top-14 right-0" defaults={true}>
@@ -44,7 +40,7 @@ export default function Homepage() {
               />
             </div>
           </div>
-        </body>
+        </div>
       </div>
     </>
   );

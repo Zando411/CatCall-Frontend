@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./utils/AuthContext.jsx";
 
 import "./index.css";
 import Homepage from "./pages/homepage.jsx";
@@ -11,16 +12,18 @@ import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="auth" element={<AuthPage />} />
-        {/* Protected routes */}
-        <Route element={<ProtectedRoutes />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="profile" element={<Profile />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="auth" element={<AuthPage />} />
+          {/* Protected routes */}
+          <Route element={<ProtectedRoutes />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="profile" element={<Profile />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   </StrictMode>,
 );

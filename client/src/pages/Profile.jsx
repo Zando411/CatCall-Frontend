@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
+import { AuthContext } from "../utils/AuthContext";
 import logo from "../assets/logo.svg";
 import Button from "../components/Button";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import CatForm from "../components/CatForm";
 import ProfileCard from "../components/ProfileCard";
@@ -13,11 +14,19 @@ const FAVORITES_SERVICE_URL = import.meta.env.VITE_FAVORITES_SERVICE_URL;
 const CAT_DB_URL = import.meta.env.VITE_CAT_DB_URL;
 
 export default function Profile() {
-  const userID = localStorage.getItem("CatCallLoggedInUser");
   const [viewMyCats, setViewMyCats] = useState(true);
   const [catForm, setCatForm] = useState(false);
   const [likedCats, setLikedCats] = useState([]);
   const [myCats, setMyCats] = useState([]);
+
+  const navigate = useNavigate();
+  const { logout, email } = useContext(AuthContext);
+  const userID = email;
+
+  const logoutHandler = () => {
+    logout();
+    navigate("/");
+  };
 
   const fetchLikedCats = async () => {
     try {
@@ -32,18 +41,25 @@ export default function Profile() {
         return;
       }
 
-      const catResponses = await Promise.all(
+      console.log("Favorites found:", favorites);
+
+      const catResponses = await Promise.allSettled(
         favorites.map((favoriteId) =>
           axios.get(`${CAT_DB_URL}/api/cats/${favoriteId}`),
         ),
       );
 
-      setLikedCats(catResponses.map((response) => response.data));
+      // filter out deleted cats
+      const validCats = catResponses
+        .filter((result) => result.status === "fulfilled")
+        .map((result) => result.value.data);
+
+      setLikedCats(validCats);
+      console.log(validCats);
     } catch (error) {
       console.error("Error fetching cats:", error);
     } finally {
       console.log("Favorites loaded");
-      console.log(likedCats);
     }
   };
 
@@ -53,11 +69,11 @@ export default function Profile() {
         `${CAT_DB_URL}/api/cats/?owner=${userID}`,
       );
       setMyCats(catResponse.data);
+      console.log(catResponse.data);
     } catch (error) {
       console.error("Error fetching cats:", error);
     } finally {
       console.log("My cats loaded");
-      console.log(myCats);
     }
   };
 
@@ -99,6 +115,15 @@ export default function Profile() {
               >
                 Liked Cats
               </h1>
+              <div className="absolute left-16 flex">
+                <Button
+                  className={"bg-red-400"}
+                  defaults={true}
+                  onClick={() => logoutHandler()}
+                >
+                  Log Out <span className="text-2xl"></span>
+                </Button>
+              </div>
               <div className="absolute right-16 flex">
                 <Button
                   className={"primary"}

@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../utils/AuthContext";
 import DropdownField from "./DropdownField";
 import InputField from "./InputField";
 import axios from "axios";
 
 const CAT_DB_URL = import.meta.env.VITE_CAT_DB_URL;
-const userID = localStorage.getItem("CatCallLoggedInUser");
 
 export default function CatForm({ show, handleClose }) {
   const [step, setStep] = useState(1);
   const [error, setError] = useState(null);
   const [photoError, setPhotoError] = useState(null);
+
+  const { email } = useContext(AuthContext);
+  const userID = email;
 
   const [catInfo, setCatInfo] = useState({
     name: "",

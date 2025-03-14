@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
+import { AuthContext } from "../utils/AuthContext";
 import axios from "axios";
 import thumbsUp from "../assets/thumbs-up.svg";
 import thumbsDown from "../assets/thumbs-down.svg";
@@ -8,7 +9,6 @@ const FAVORITES_SERVICE_URL = import.meta.env.VITE_FAVORITES_SERVICE_URL;
 const CAT_DB_URL = import.meta.env.VITE_CAT_DB_URL;
 
 export default function CatCards() {
-  const userID = localStorage.getItem("CatCallLoggedInUser");
   const hasFetched = useRef(false);
   const [cats, setCats] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,6 +17,9 @@ export default function CatCards() {
   const [page, setPage] = useState(1);
   const [noMoreCats, setNoMoreCats] = useState(false);
   const LIMIT = 5;
+
+  const { email } = useContext(AuthContext);
+  const userID = email;
 
   const fetchCats = async (nextPage) => {
     if (!userID) {

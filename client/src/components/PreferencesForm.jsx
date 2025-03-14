@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../utils/AuthContext";
 import DropdownField from "./DropdownField";
 import InputField from "./InputField";
 import axios from "axios";
 import settingsIcon from "../assets/settings.svg";
 
 const PREFERENCES_DB_URL = import.meta.env.VITE_PREFERENCES_DB_URL;
-const userID = localStorage.getItem("CatCallLoggedInUser");
 
 export default function PreferencesForm({ onPreferencesUpdate }) {
   const [error, setError] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [pullPreferences, setPullPreferences] = useState(true);
+
+  const { email } = useContext(AuthContext);
+  const userID = email;
 
   const [preferences, setPreferences] = useState({
     minAge: "",

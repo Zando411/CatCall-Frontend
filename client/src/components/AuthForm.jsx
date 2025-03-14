@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../utils/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +13,7 @@ export default function AuthForm() {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     try {
@@ -42,8 +44,8 @@ export default function AuthForm() {
           return;
         }
       }
-      localStorage.setItem("CatCallLoggedInUser", email);
 
+      login(email);
       setError("");
       navigate("/dashboard");
     } catch (error) {

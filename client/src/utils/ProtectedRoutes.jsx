@@ -1,11 +1,13 @@
 import { Outlet, Navigate } from "react-router-dom";
+import { AuthContext } from "../utils/AuthContext";
+import { useContext } from "react";
 
 export default function ProtectedRoutes() {
-  const user = localStorage.getItem("CatCallLoggedInUser");
+  const { email, loading } = useContext(AuthContext); // Get auth state
 
-  if (!user) {
-    return <Navigate to="/auth" />;
+  if (loading) {
+    return <h1>Loading...</h1>;
   }
 
-  return <Outlet />;
+  return email ? <Outlet /> : <Navigate to="/auth" replace />;
 }
