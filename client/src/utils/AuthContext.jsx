@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [email, setEmail] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     // retrieve email from localStorage on page reload
@@ -21,12 +22,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    setIsLoggingOut(true);
     setEmail(null);
     localStorage.removeItem("CatCallLoggedInUser");
   };
 
   return (
-    <AuthContext.Provider value={{ email, login, logout, loading }}>
+    <AuthContext.Provider
+      value={{ email, login, logout, loading, isLoggingOut }}
+    >
       {children}
     </AuthContext.Provider>
   );
