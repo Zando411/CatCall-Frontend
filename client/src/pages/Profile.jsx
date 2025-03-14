@@ -1,13 +1,75 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 import logo from "../assets/logo.svg";
 import Button from "../components/Button";
 import { NavLink } from "react-router-dom";
 import Nav from "../components/Nav";
-import { useState } from "react";
 import CatForm from "../components/CatForm";
+import ProfileCard from "../components/ProfileCard";
+import { use } from "react";
+
+const FAVORITES_SERVICE_URL = import.meta.env.VITE_FAVORITES_SERVICE_URL;
+const CAT_DB_URL = import.meta.env.VITE_CAT_DB_URL;
 
 export default function Profile() {
+  const userID = localStorage.getItem("CatCallLoggedInUser");
   const [viewMyCats, setViewMyCats] = useState(true);
   const [catForm, setCatForm] = useState(false);
+  const [likedCats, setLikedCats] = useState([]);
+  const [myCats, setMyCats] = useState([]);
+
+  const fetchLikedCats = async () => {
+    try {
+      const favoritesResponse = await axios.get(
+        `${FAVORITES_SERVICE_URL}/api/favorites/${userID}`,
+      );
+      const favorites = favoritesResponse.data.favorites;
+
+      if (favorites.length === 0) {
+        console.log("No favorites found");
+        setLikedCats([]);
+        return;
+      }
+
+      const catResponses = await Promise.all(
+        favorites.map((favoriteId) =>
+          axios.get(`${CAT_DB_URL}/api/cats/${favoriteId}`),
+        ),
+      );
+
+      setLikedCats(catResponses.map((response) => response.data));
+    } catch (error) {
+      console.error("Error fetching cats:", error);
+    } finally {
+      console.log("Favorites loaded");
+      console.log(likedCats);
+    }
+  };
+
+  const fetchMyCats = async () => {
+    try {
+      const catResponse = await axios.get(
+        `${CAT_DB_URL}/api/cats/?owner=${userID}`,
+      );
+      setMyCats(catResponse.data);
+    } catch (error) {
+      console.error("Error fetching cats:", error);
+    } finally {
+      console.log("My cats loaded");
+      console.log(myCats);
+    }
+  };
+
+  useEffect(() => {
+    fetchMyCats();
+    fetchLikedCats();
+  }, []);
+
+  const handleFormClose = () => {
+    setCatForm(false);
+    fetchMyCats();
+  };
 
   const flipView = () => {
     setViewMyCats(!viewMyCats);
@@ -18,7 +80,7 @@ export default function Profile() {
       <div className="bg-black-cat text-white">
         <Nav></Nav>
         <div className="relative mx-auto max-w-[1440px] px-8 text-center">
-          <body className="flex min-h-screen min-w-[320px] flex-col items-center justify-start p-4 pt-24">
+          <div className="flex min-h-screen min-w-[320px] flex-col items-center justify-start p-4 pt-24">
             {/* headers for my cats and saved cats */}
             <div className="mt-4 flex items-center justify-center gap-12 text-5xl">
               <h1
@@ -35,7 +97,7 @@ export default function Profile() {
                 }`}
                 onClick={!viewMyCats ? undefined : flipView}
               >
-                Saved Cats
+                Liked Cats
               </h1>
               <div className="absolute right-16 flex">
                 <Button
@@ -48,8 +110,37 @@ export default function Profile() {
               </div>
             </div>
             {/* cat form */}
-            {<CatForm show={catForm} handleClose={() => setCatForm(false)} />}
-          </body>
+            {<CatForm show={catForm} handleClose={() => handleFormClose()} />}
+
+            {/* cat cards */}
+            {!viewMyCats ? (
+              likedCats.length > 0 ? (
+                <div className="mt-16 grid w-full grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {likedCats.map((likedCat, index) => (
+                    <ProfileCard key={index} cat={likedCat} />
+                  ))}
+                </div>
+              ) : (
+                <div>
+                  <p className="mt-16 text-lg text-gray-300">
+                    No liked cats available!
+                  </p>
+                </div>
+              )
+            ) : myCats.length > 0 ? (
+              <div className="my-16 grid w-full grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {myCats.map((myCat, index) => (
+                  <ProfileCard key={index} cat={myCat} />
+                ))}
+              </div>
+            ) : (
+              <div>
+                <p className="mt-16 text-lg text-gray-300">
+                  You have no uploaded cats!
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>
