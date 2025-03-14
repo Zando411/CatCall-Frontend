@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import CatForm from "../components/CatForm";
 import ProfileCard from "../components/ProfileCard";
+import EditCatForm from "../components/EditCatForm";
 
 const FAVORITES_SERVICE_URL = import.meta.env.VITE_FAVORITES_SERVICE_URL;
 const CAT_DB_URL = import.meta.env.VITE_CAT_DB_URL;
@@ -17,6 +18,8 @@ export default function Profile() {
   const [catForm, setCatForm] = useState(false);
   const [likedCats, setLikedCats] = useState([]);
   const [myCats, setMyCats] = useState([]);
+  const [editingCat, setEditingCat] = useState(null);
+  const [editForm, setEditForm] = useState(false);
 
   const navigate = useNavigate();
   const { logout, email } = useContext(AuthContext);
@@ -80,6 +83,23 @@ export default function Profile() {
     fetchMyCats();
     fetchLikedCats();
   }, []);
+
+  // form functions
+  const updateCat = (updatedCat) => {
+    setMyCats((prevCats) =>
+      prevCats.map((cat) => (cat._id === updatedCat._id ? updatedCat : cat)),
+    );
+  };
+
+  const handleEdit = (cat) => {
+    setEditingCat(cat);
+    setEditForm(true);
+  };
+
+  const closeEditForm = () => {
+    setEditForm(false);
+    setEditingCat(null);
+  };
 
   const handleFormClose = () => {
     setCatForm(false);
@@ -165,6 +185,7 @@ export default function Profile() {
                     removesFrom={"cats"}
                     fetchFunction={fetchMyCats}
                     editable
+                    onEdit={() => handleEdit(myCat)}
                   />
                 ))}
               </div>
@@ -174,6 +195,14 @@ export default function Profile() {
                   You have no uploaded cats!
                 </p>
               </div>
+            )}
+            {editingCat && (
+              <EditCatForm
+                cat={editingCat}
+                updateCat={updateCat}
+                show={editForm}
+                handleClose={closeEditForm}
+              />
             )}
           </div>
         </div>
