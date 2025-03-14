@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import CatForm from "../components/CatForm";
 import ProfileCard from "../components/ProfileCard";
-import { use } from "react";
 
 const FAVORITES_SERVICE_URL = import.meta.env.VITE_FAVORITES_SERVICE_URL;
 const CAT_DB_URL = import.meta.env.VITE_CAT_DB_URL;
@@ -142,7 +141,12 @@ export default function Profile() {
               likedCats.length > 0 ? (
                 <div className="mt-16 grid w-full grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {likedCats.map((likedCat, index) => (
-                    <ProfileCard key={index} cat={likedCat} />
+                    <ProfileCard
+                      key={index}
+                      cat={likedCat}
+                      removesFrom={"favorites"}
+                      fetchFunction={fetchLikedCats}
+                    />
                   ))}
                 </div>
               ) : (
@@ -155,7 +159,13 @@ export default function Profile() {
             ) : myCats.length > 0 ? (
               <div className="my-16 grid w-full grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {myCats.map((myCat, index) => (
-                  <ProfileCard key={index} cat={myCat} />
+                  <ProfileCard
+                    key={index}
+                    cat={myCat}
+                    removesFrom={"cats"}
+                    fetchFunction={fetchMyCats}
+                    editable
+                  />
                 ))}
               </div>
             ) : (
