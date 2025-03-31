@@ -24,6 +24,7 @@ export default function PreferencesForm({ onPreferencesUpdate }) {
     city: "",
     state: "",
     radius: "",
+    strict: false,
   });
 
   const openForm = async () => {
@@ -71,6 +72,7 @@ export default function PreferencesForm({ onPreferencesUpdate }) {
           city: "",
           state: "",
           radius: "",
+          strict: false,
         });
         setError(null);
         setIsOpen(false);
@@ -211,12 +213,22 @@ export default function PreferencesForm({ onPreferencesUpdate }) {
                 {error && <p className="mb-2 text-red-600">{error}</p>}
               </>
 
-              <button
-                type="submit"
-                className="text-mitten-white bg-accent hover:bg-accent-dark float-right cursor-pointer rounded-md px-4 py-2 transition-all duration-200 hover:scale-105"
-              >
-                Submit
-              </button>
+              <div>
+                <input
+                  type="checkbox"
+                  name="strict"
+                  id="strict-checkbox"
+                  value={preferences.strict}
+                  onChange={handleChange}
+                />
+
+                <button
+                  type="submit"
+                  className="text-mitten-white bg-accent hover:bg-accent-dark float-right cursor-pointer rounded-md px-4 py-2 transition-all duration-200 hover:scale-105"
+                >
+                  Submit
+                </button>
+              </div>
             </form>
           </div>
         </div>
