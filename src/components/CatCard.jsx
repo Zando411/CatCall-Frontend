@@ -92,14 +92,15 @@ export default function CatCards() {
           </p>
         </>
       ) : (
-        <div className="relative w-96 overflow-hidden rounded-lg bg-white text-black shadow-lg">
+        <div className="relative w-72 overflow-hidden rounded-lg bg-white text-black shadow-lg sm:w-96">
           {/* Cat Image */}
-          <div className="relative">
+          <div className="relative w-full">
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
             <img
               src={`${CAT_DB_URL}/api/catImage/${cats[currentIndex].owner}/${cats[currentIndex]._id}`}
               alt={cats[currentIndex].name}
-              className="h-96 w-full object-cover object-center"
+              className="h-72 w-full object-cover object-center sm:h-96"
+              draggable="false"
             />
           </div>
           <div className="flex flex-col gap-1 p-4 text-left">
@@ -130,18 +131,28 @@ export default function CatCards() {
 
       {/* Like & Dislike Buttons */}
       {!noMoreCats && (
-        <div className="mt-6 flex gap-8">
+        <div className="mt-4 flex gap-8 sm:mt-6">
           <button
             onClick={() => handleAction(false)}
             className="bg-mitten-white flex h-20 w-20 cursor-pointer items-center justify-center rounded-full shadow-lg transition-all hover:scale-105 hover:bg-red-500"
           >
-            <img src={thumbsDown} alt="Dislike" className="mt-2 mr-1 w-12" />
+            <img
+              src={thumbsDown}
+              alt="Dislike"
+              className="mt-2 mr-1 w-12"
+              draggable="false"
+            />
           </button>
           <button
             onClick={() => handleAction(true)}
             className="bg-mitten-white flex h-20 w-20 cursor-pointer items-center justify-center rounded-full shadow-lg transition-all hover:scale-105 hover:bg-green-500"
           >
-            <img src={thumbsUp} alt="Like" className="mb-1 ml-1 w-12" />
+            <img
+              src={thumbsUp}
+              alt="Like"
+              className="mb-1 ml-1 w-12"
+              draggable="false"
+            />
           </button>
         </div>
       )}
