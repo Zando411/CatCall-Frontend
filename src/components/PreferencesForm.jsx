@@ -43,6 +43,11 @@ export default function PreferencesForm({ onPreferencesUpdate }) {
     setIsOpen(false);
   };
 
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setPreferences({ ...preferences, [name]: checked });
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPreferences({ ...preferences, [name]: value });
@@ -213,14 +218,18 @@ export default function PreferencesForm({ onPreferencesUpdate }) {
                 {error && <p className="mb-2 text-red-600">{error}</p>}
               </>
 
-              <div>
-                <input
-                  type="checkbox"
-                  name="strict"
-                  id="strict-checkbox"
-                  value={preferences.strict}
-                  onChange={handleChange}
-                />
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-2">
+                  <label htmlFor="strict">Only Show Cats with All Traits</label>
+                  <input
+                    type="checkbox"
+                    name="strict"
+                    id="strict-checkbox"
+                    className="h-4 w-4 cursor-pointer rounded-md border-gray-300"
+                    checked={preferences.strict}
+                    onChange={handleCheckboxChange}
+                  />
+                </div>
 
                 <button
                   type="submit"
