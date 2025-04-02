@@ -16,7 +16,7 @@ export default function Nav({ onPreferencesUpdate }) {
       <NavLink to="/dashboard" end>
         <img src={logo} alt="CatCall Logo" className="h-16" />
       </NavLink>
-      <div className="absolute flex w-full items-center justify-between px-2 sm:top-4 sm:right-4 sm:justify-end sm:gap-4 sm:px-0">
+      <div className="absolute flex w-full items-center justify-between px-2 sm:top-4 sm:right-4 sm:w-fit sm:justify-end sm:gap-4 sm:px-0">
         <PreferencesForm onPreferencesUpdate={onPreferencesUpdate} />
         <NavLink to="/profile" end>
           <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full shadow-md outline-2 outline-white">
