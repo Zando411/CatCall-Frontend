@@ -159,7 +159,7 @@ export default function Profile() {
             {/* cat cards */}
             {!viewMyCats ? (
               likedCats.length > 0 ? (
-                <div className="mt-16 grid w-full grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div className="my-16 grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2 xl:grid-cols-3">
                   {likedCats.map((likedCat, index) => (
                     <ProfileCard
                       key={index}
@@ -177,7 +177,7 @@ export default function Profile() {
                 </div>
               )
             ) : myCats.length > 0 ? (
-              <div className="my-16 grid w-full grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div className="my-16 grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {myCats.map((myCat, index) => (
                   <ProfileCard
                     key={index}

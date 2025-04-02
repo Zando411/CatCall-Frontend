@@ -46,7 +46,7 @@ export default function ProfileCard({
 
   return (
     <>
-      <div className="relative w-96 overflow-hidden rounded-lg bg-white text-black shadow-lg">
+      <div className="relative w-80 overflow-hidden rounded-lg bg-white text-black shadow-lg xl:w-96">
         {/* Cat Image */}
         <div className="relative">
           <div className="absolute right-0 bottom-0 z-20 flex gap-4 rounded bg-black/70 p-3 text-white">
