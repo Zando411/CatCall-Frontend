@@ -17,8 +17,8 @@ export default function Dashboard() {
     <>
       <div className="bg-black-cat text-white">
         <Nav onPreferencesUpdate={triggerRefresh} />
-        <div className="mx-auto max-w-[1440px] px-8 text-center">
-          <div className="flex min-h-screen min-w-[320px] flex-col items-center justify-center p-4 pt-24">
+        <div className="mx-auto max-w-[1440px] text-center md:px-8">
+          <div className="flex min-h-screen flex-col items-center justify-center p-4 pt-24">
             <CatCard key={refreshKey} />
           </div>
         </div>
