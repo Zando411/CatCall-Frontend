@@ -14,9 +14,6 @@ export default function CatCards() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [noMoreCats, setNoMoreCats] = useState(false);
-  const hasFetched = useRef(false);
-  // const [page, setPage] = useState(1); pagination
-  // const LIMIT = 5; pagination
 
   const { email } = useContext(AuthContext);
   const userID = email;
@@ -40,7 +37,6 @@ export default function CatCards() {
         setNoMoreCats(true);
       } else {
         setCats(response.data.recommendedCats);
-        // setPage(nextPage); pagination
       }
     } catch (error) {
       console.error("Error fetching cats:", error);
@@ -70,10 +66,14 @@ export default function CatCards() {
       }
     }
 
-    if (currentIndex - 1 >= cats.length) {
-      setNoMoreCats(true);
+    // Move to next cat
+    const nextIndex = currentIndex + 1;
+    if (nextIndex < cats.length) {
+      console.log("Next cat:", cats[nextIndex].name);
+      setCurrentIndex(nextIndex);
     } else {
-      setCurrentIndex((prevIndex) => prevIndex + 1);
+      console.log("No more cats available.");
+      setNoMoreCats(true);
     }
   };
 
@@ -84,7 +84,14 @@ export default function CatCards() {
         <p className="text-lg text-gray-400">Loading cats...</p>
       ) : error ? (
         <p className="text-lg text-red-500">{error}</p>
-      ) : currentIndex < cats.length ? (
+      ) : noMoreCats ? (
+        <>
+          <p className="text-lg text-gray-300">No more cats available!</p>
+          <p className="text-md text-gray-300">
+            Try changing your preferences in the top right to see more cats
+          </p>
+        </>
+      ) : (
         <div className="relative w-96 overflow-hidden rounded-lg bg-white text-black shadow-lg">
           {/* Cat Image */}
           <div className="relative">
@@ -119,17 +126,10 @@ export default function CatCards() {
             </p>
           </div>
         </div>
-      ) : noMoreCats ? (
-        <>
-          <p className="text-lg text-gray-300">No more cats available!</p>
-          <p className="text-md text-gray-300">
-            Try changing your preferences in the top right to see more cats
-          </p>
-        </>
-      ) : null}
+      )}
 
       {/* Like & Dislike Buttons */}
-      {currentIndex < cats.length && (
+      {!noMoreCats && (
         <div className="mt-6 flex gap-8">
           <button
             onClick={() => handleAction(false)}
