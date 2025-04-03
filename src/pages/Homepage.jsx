@@ -26,9 +26,11 @@ export default function Homepage() {
                   Your <span className="text-accent">purrrr</span>fect cat is
                   just a <span className="text-secondary">like</span> away
                 </h2>
-                <Button className={"primary"} defaults={true}>
-                  Join Now
-                </Button>
+                <NavLink to="/auth" end>
+                  <Button className={"primary"} defaults={true}>
+                    Join Now
+                  </Button>
+                </NavLink>
               </div>
             </div>
             {/* right half of hero */}
