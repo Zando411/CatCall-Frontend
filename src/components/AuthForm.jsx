@@ -66,7 +66,7 @@ export default function AuthForm() {
             Enter your email and password below to sign in
           </h3>
           <h4 className="text-sm font-medium text-gray-500">
-            We'll never send you spam or share your email address.
+            We&apos;ll never send you spam or share your email address.
           </h4>
         </div>
         <form
@@ -94,7 +94,7 @@ export default function AuthForm() {
             />
           </div>
           <button
-            className="bg-accent mt-1 w-full rounded px-6 py-1 font-medium text-white"
+            className="bg-accent mt-1 w-full cursor-pointer rounded px-6 py-1 font-medium text-white"
             type="submit"
           >
             Sign In
