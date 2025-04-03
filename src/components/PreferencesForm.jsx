@@ -103,7 +103,7 @@ export default function PreferencesForm({ onPreferencesUpdate }) {
       </span>
 
       {isOpen && (
-        <div className="text-black-cat fixed inset-0 flex items-center justify-center bg-black/75 py-20">
+        <div className="text-black-cat fixed inset-0 z-40 flex items-center justify-center bg-black/75 py-20">
           <div className="bg-mitten-white relative w-full max-w-md rounded-lg p-6 shadow-lg">
             <span
               className="hover:text-accent absolute top-4 right-4 float-right cursor-pointer text-2xl text-gray-600 transition-colors duration-200 hover:scale-110"

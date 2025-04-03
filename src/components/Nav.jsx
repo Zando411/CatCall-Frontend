@@ -12,8 +12,8 @@ export default function Nav({ onPreferencesUpdate }) {
   const avatarImage = profileIcon;
 
   return (
-    <nav className="bg-accent absolute top-0 z-50 flex h-20 w-full items-center justify-center px-8 text-white">
-      <NavLink to="/dashboard" end>
+    <nav className="bg-accent absolute top-0 z-30 flex h-20 w-full items-center justify-center px-8 text-white">
+      <NavLink to="/dashboard" end className="z-40">
         <img src={logo} alt="CatCall Logo" className="h-16" />
       </NavLink>
       <div className="absolute flex w-full items-center justify-between px-2 sm:top-4 sm:right-4 sm:w-fit sm:justify-end sm:gap-4 sm:px-0">
