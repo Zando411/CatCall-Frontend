@@ -2,9 +2,6 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { AuthContext } from "../utils/AuthContext";
 
-import editIcon from "../assets/edit.svg";
-import removeIcon from "../assets/trash.svg";
-
 const CAT_DB_URL = import.meta.env.VITE_CAT_DB_URL;
 const FAVORITES_SERVICE_URL = import.meta.env.VITE_FAVORITES_SERVICE_URL;
 
@@ -14,6 +11,7 @@ export default function ProfileCard({
   fetchFunction,
   editable = false,
   onEdit,
+  openConfirmationModal,
 }) {
   const { email } = useContext(AuthContext);
   const userID = email;
@@ -38,15 +36,13 @@ export default function ProfileCard({
     }
   };
 
-  const handleRemove = async () => {
-    if (confirm("Are you sure you want to remove this cat?")) {
-      remove();
-    }
+  const handleRemove = () => {
+    openConfirmationModal(cat, remove);
   };
 
   return (
     <>
-      <div className="relative w-80 overflow-hidden rounded-lg bg-white text-black shadow-lg xl:w-96">
+      <div className="relative w-72 overflow-hidden rounded-lg bg-white text-black shadow-lg sm:w-80 xl:w-96">
         {/* Cat Image */}
         <div className="relative">
           <div className="absolute right-0 bottom-0 z-20 flex gap-4 rounded bg-black/70 p-3 text-white">
