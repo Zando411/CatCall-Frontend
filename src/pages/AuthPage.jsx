@@ -7,7 +7,7 @@ export default function AuthPage() {
   return (
     <div className="flex h-screen w-screen">
       {/* Left Side (Full-Height Image) */}
-      <div className="h-full w-1/2">
+      <div className="hidden h-full w-1/2 lg:block">
         <img
           src={heroImage}
           alt="Sign In"
@@ -16,7 +16,7 @@ export default function AuthPage() {
       </div>
 
       {/* Right Side (Sign-In Form) */}
-      <div className="flex h-full w-1/2 flex-col items-center justify-center bg-white">
+      <div className="mx-auto flex h-full flex-col items-center justify-center bg-white p-4 lg:w-1/2">
         <NavLink to="/" end>
           <img src={logo} alt="CatCall Logo" className="mb-4 w-96" />
         </NavLink>
