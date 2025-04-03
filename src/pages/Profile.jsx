@@ -115,9 +115,10 @@ export default function Profile() {
       <div className="bg-black-cat text-white">
         <Nav></Nav>
         <div className="relative mx-auto max-w-[1440px] px-8 text-center">
-          <div className="flex min-h-screen min-w-[320px] flex-col items-center justify-start p-4 pt-24">
+          <div className="flex min-h-screen flex-col items-center justify-start p-4 pt-24">
             {/* headers for my cats and saved cats */}
-            <div className="mt-4 flex items-center justify-center gap-12 text-5xl">
+            <div className="mt-4 flex-wrap items-center justify-center lg:flex">
+              <div className="flex flex-col flex-wrap items-center justify-center gap-4 text-4xl sm:text-5xl md:flex-row md:gap-12">
               <h1
                 className={`cursor-pointer transition-opacity duration-300 ${
                   viewMyCats ? "opacity-100" : "opacity-30"
@@ -143,14 +144,26 @@ export default function Profile() {
                   Log Out <span className="text-2xl"></span>
                 </Button>
               </div>
-              <div className="absolute right-16 flex">
+              <div className="mt-4 flex flex-col items-center gap-4 lg:mt-0 lg:flex-row lg:justify-center lg:gap-0">
+                <div className="flex justify-center lg:absolute lg:right-16">
                 <Button
                   className={"primary"}
                   defaults={true}
                   onClick={() => setCatForm(true)}
                 >
-                  Upload Cat <span className="text-2xl">+</span>
+<span className="">Upload Cat</span>{" "}
+<span className="text-2xl">+</span>
+</Button>
+                </div>
+                <div className="flex justify-center lg:absolute lg:left-16">
+                  <Button
+                    className={"bg-red-400"}
+                    defaults={true}
+                    onClick={() => logoutHandler()}
+                  >
+                    <span className="">Log Out</span>
                 </Button>
+</div>
               </div>
             </div>
             {/* cat form */}
@@ -159,7 +172,7 @@ export default function Profile() {
             {/* cat cards */}
             {!viewMyCats ? (
               likedCats.length > 0 ? (
-                <div className="my-16 grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2 xl:grid-cols-3">
+                <div className="my-8 grid grid-cols-1 justify-items-center gap-4 md:my-16 md:grid-cols-2 xl:grid-cols-3">
                   {likedCats.map((likedCat, index) => (
                     <ProfileCard
                       key={index}
@@ -177,7 +190,7 @@ export default function Profile() {
                 </div>
               )
             ) : myCats.length > 0 ? (
-              <div className="my-16 grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <div className="my-8 grid grid-cols-1 justify-items-center gap-4 md:my-16 md:grid-cols-2 xl:grid-cols-3">
                 {myCats.map((myCat, index) => (
                   <ProfileCard
                     key={index}
