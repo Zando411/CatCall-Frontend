@@ -2,13 +2,13 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
 import { AuthContext } from "../utils/AuthContext";
-import logo from "../assets/logo.svg";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import CatForm from "../components/CatForm";
 import ProfileCard from "../components/ProfileCard";
 import EditCatForm from "../components/EditCatForm";
+import ConfirmationModal from "../components/ConfirmationModal";
 
 const FAVORITES_SERVICE_URL = import.meta.env.VITE_FAVORITES_SERVICE_URL;
 const CAT_DB_URL = import.meta.env.VITE_CAT_DB_URL;
@@ -20,6 +20,9 @@ export default function Profile() {
   const [myCats, setMyCats] = useState([]);
   const [editingCat, setEditingCat] = useState(null);
   const [editForm, setEditForm] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [catToRemove, setCatToRemove] = useState(null);
+  const [removeFunction, setRemoveFunction] = useState(() => () => {});
 
   const navigate = useNavigate();
   const { logout, email } = useContext(AuthContext);
@@ -110,6 +113,25 @@ export default function Profile() {
     setViewMyCats(!viewMyCats);
   };
 
+  const openConfirmationModal = (cat, removeFunc) => {
+    setCatToRemove(cat);
+    setRemoveFunction(() => removeFunc);
+    setShowConfirmation(true);
+  };
+
+  const handleConfirmRemove = async () => {
+    setShowConfirmation(false);
+    if (removeFunction) {
+      await removeFunction();
+    }
+  };
+
+  const handleCancelRemove = () => {
+    setShowConfirmation(false);
+    setCatToRemove(null);
+    setRemoveFunction(() => () => {});
+  };
+
   return (
     <>
       <div className="bg-black-cat text-white">
@@ -119,41 +141,33 @@ export default function Profile() {
             {/* headers for my cats and saved cats */}
             <div className="mt-4 flex-wrap items-center justify-center lg:flex">
               <div className="flex flex-col flex-wrap items-center justify-center gap-4 text-4xl sm:text-5xl md:flex-row md:gap-12">
-              <h1
-                className={`cursor-pointer transition-opacity duration-300 ${
-                  viewMyCats ? "opacity-100" : "opacity-30"
-                }`}
-                onClick={viewMyCats ? undefined : flipView}
-              >
-                My Cats
-              </h1>
-              <h1
-                className={`cursor-pointer transition-opacity duration-300 ${
-                  viewMyCats ? "opacity-30" : "opacity-100"
-                }`}
-                onClick={!viewMyCats ? undefined : flipView}
-              >
-                Liked Cats
-              </h1>
-              <div className="absolute left-16 flex">
-                <Button
-                  className={"bg-red-400"}
-                  defaults={true}
-                  onClick={() => logoutHandler()}
+                <h1
+                  className={`cursor-pointer transition-opacity duration-300 ${
+                    viewMyCats ? "opacity-100" : "opacity-30"
+                  }`}
+                  onClick={viewMyCats ? undefined : flipView}
                 >
-                  Log Out <span className="text-2xl"></span>
-                </Button>
+                  My Cats
+                </h1>
+                <h1
+                  className={`cursor-pointer transition-opacity duration-300 ${
+                    viewMyCats ? "opacity-30" : "opacity-100"
+                  }`}
+                  onClick={!viewMyCats ? undefined : flipView}
+                >
+                  Liked Cats
+                </h1>
               </div>
               <div className="mt-4 flex flex-col items-center gap-4 lg:mt-0 lg:flex-row lg:justify-center lg:gap-0">
                 <div className="flex justify-center lg:absolute lg:right-16">
-                <Button
-                  className={"primary"}
-                  defaults={true}
-                  onClick={() => setCatForm(true)}
-                >
-<span className="">Upload Cat</span>{" "}
-<span className="text-2xl">+</span>
-</Button>
+                  <Button
+                    className={"primary"}
+                    defaults={true}
+                    onClick={() => setCatForm(true)}
+                  >
+                    <span className="">Upload Cat</span>{" "}
+                    <span className="text-2xl">+</span>
+                  </Button>
                 </div>
                 <div className="flex justify-center lg:absolute lg:left-16">
                   <Button
@@ -162,8 +176,8 @@ export default function Profile() {
                     onClick={() => logoutHandler()}
                   >
                     <span className="">Log Out</span>
-                </Button>
-</div>
+                  </Button>
+                </div>
               </div>
             </div>
             {/* cat form */}
@@ -179,6 +193,8 @@ export default function Profile() {
                       cat={likedCat}
                       removesFrom={"favorites"}
                       fetchFunction={fetchLikedCats}
+                      editable={false}
+                      openConfirmationModal={openConfirmationModal}
                     />
                   ))}
                 </div>
@@ -199,6 +215,7 @@ export default function Profile() {
                     fetchFunction={fetchMyCats}
                     editable
                     onEdit={() => handleEdit(myCat)}
+                    openConfirmationModal={openConfirmationModal}
                   />
                 ))}
               </div>
@@ -217,6 +234,12 @@ export default function Profile() {
                 handleClose={closeEditForm}
               />
             )}
+            <ConfirmationModal
+              show={showConfirmation}
+              message={`Are you sure you want to remove ${catToRemove?.name}?`}
+              onConfirm={handleConfirmRemove}
+              onCancel={handleCancelRemove}
+            />
           </div>
         </div>
       </div>
