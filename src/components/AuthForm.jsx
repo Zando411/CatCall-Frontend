@@ -4,12 +4,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const AUTH_URL = import.meta.env.VITE_AUTH_URL;
+const FAVORITES_SERVICE_URL = import.meta.env.VITE_FAVORITES_SERVICE_URL;
 
 export default function AuthForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // for use with sign up later
-  // const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -43,6 +42,11 @@ export default function AuthForm() {
           setError(signUpResponse.data.message);
           return;
         }
+
+        // create favorites for user
+        await axios.post(`${FAVORITES_SERVICE_URL}/api/favorites/newUser`, {
+          userID: email,
+        });
       }
 
       login(email);
