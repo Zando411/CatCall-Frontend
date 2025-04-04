@@ -3,7 +3,7 @@ import { AuthContext } from "../utils/AuthContext";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/outlinedLogo.svg";
 import profileIcon from "../assets/profile.svg";
-import PreferencesForm from "./preferencesForm";
+import PreferencesForm from "./PreferencesForm";
 
 export default function Nav({ onPreferencesUpdate }) {
   const { email } = useContext(AuthContext);
