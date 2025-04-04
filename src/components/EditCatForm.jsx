@@ -48,7 +48,6 @@ export default function EditCatForm({ cat, updateCat, show, handleClose }) {
       );
 
       if (response.data.message === "Cat updated") {
-        console.log("Success:", response.data);
         updateCat({ ...cat, ...catInfo });
         setError(null);
         handleClose();

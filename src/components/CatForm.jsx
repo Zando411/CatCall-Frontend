@@ -109,8 +109,6 @@ export default function CatForm({ show, handleClose }) {
       formData.append(key, value);
     });
 
-    console.log([...formData.entries()]);
-
     try {
       const response = await axios.post(
         `${CAT_DB_URL}/api/uploadCat`,
@@ -123,7 +121,6 @@ export default function CatForm({ show, handleClose }) {
       );
 
       if (response.data.message === "Cat uploaded") {
-        console.log("Success:", response.data);
         closeForm();
       }
     } catch (error) {

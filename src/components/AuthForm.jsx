@@ -20,7 +20,6 @@ export default function AuthForm() {
       const userCheck = await axios.post(`${AUTH_URL}/api/checkUser`, {
         email,
       });
-      console.log(userCheck.data.message);
 
       if (userCheck.data.message === "User exists") {
         const loginResponse = await axios.post(`${AUTH_URL}/api/login`, {

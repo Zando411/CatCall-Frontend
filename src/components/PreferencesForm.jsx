@@ -33,7 +33,6 @@ export default function PreferencesForm({ onPreferencesUpdate }) {
         `${PREFERENCES_DB_URL}/api/preferences/${userID}`,
       );
       setPreferences(pulledPreferences.data);
-      console.log("Preferences pulled:", pulledPreferences.data);
       setPullPreferences(false);
     }
     setIsOpen(true);
@@ -82,7 +81,6 @@ export default function PreferencesForm({ onPreferencesUpdate }) {
         setError(null);
         setIsOpen(false);
         setPullPreferences(true);
-        console.log("Success:", response.data.message);
 
         onPreferencesUpdate();
       }

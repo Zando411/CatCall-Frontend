@@ -8,7 +8,6 @@ import PreferencesForm from "./PreferencesForm";
 export default function Nav({ onPreferencesUpdate }) {
   const { email } = useContext(AuthContext);
   const userID = email;
-  console.log(userID);
   const avatarImage = profileIcon;
 
   return (

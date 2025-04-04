@@ -54,9 +54,7 @@ export default function CatCards() {
   // Handle Like & Dislike actions (Moves to next cat)
   const handleAction = (liked) => {
     if (cats[currentIndex]) {
-      console.log(
-        `${liked ? "Liked" : "Disliked"} cat: ${cats[currentIndex].name}`,
-      );
+      
       // send like to microservice
       if (liked) {
         axios.post(`${FAVORITES_SERVICE_URL}/api/favorites`, {
@@ -69,10 +67,8 @@ export default function CatCards() {
     // Move to next cat
     const nextIndex = currentIndex + 1;
     if (nextIndex < cats.length) {
-      console.log("Next cat:", cats[nextIndex].name);
       setCurrentIndex(nextIndex);
     } else {
-      console.log("No more cats available.");
       setNoMoreCats(true);
     }
   };
