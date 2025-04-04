@@ -10,6 +10,7 @@ export default function CatForm({ show, handleClose }) {
   const [step, setStep] = useState(1);
   const [error, setError] = useState(null);
   const [photoError, setPhotoError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const { email } = useContext(AuthContext);
   const userID = email;
@@ -78,6 +79,7 @@ export default function CatForm({ show, handleClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (photoError !== null) {
       setError(photoError);
@@ -123,7 +125,9 @@ export default function CatForm({ show, handleClose }) {
       if (response.data.message === "Cat uploaded") {
         closeForm();
       }
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error("Error:", error.response.data.error);
       setError("Something went wrong. Please try again.");
     }
@@ -219,27 +223,6 @@ export default function CatForm({ show, handleClose }) {
             </>
           )}
 
-          {/* {step === 2 && (
-            <>
-              <DropdownField
-                label="Color"
-                id="formCatColor"
-                name="color"
-                value={catInfo.color}
-                onChange={handleChange}
-                options={[
-                  { label: "Black", value: "black" },
-                  { label: "White", value: "white" },
-                  { label: "Gray", value: "gray" },
-                  { label: "Orange", value: "orange" },
-                  { label: "Calico", value: "calico" },
-                  { label: "Tabby", value: "tabby" },
-                  { label: "Other", value: "other" },
-                ]}
-              />
-            </>
-          )} */}
-
           {step === 2 && (
             <>
               {/* Image Upload Field */}
@@ -252,7 +235,7 @@ export default function CatForm({ show, handleClose }) {
                     <p className="cursor-pointer text-gray-600 hover:scale-105 hover:text-gray-800">
                       ?
                     </p>
-                    <div className="absolute top-1/2 left-full w-max -translate-y-1/2 translate-x-2 transform rounded bg-gray-700 px-2 py-1 text-sm text-white opacity-0 shadow-lg group-hover:opacity-100">
+                    <div className="absolute top-1/2 left-full w-max translate-x-2 -translate-y-1/2 transform rounded bg-gray-700 px-2 py-1 text-sm text-white opacity-0 shadow-lg group-hover:opacity-100">
                       File must be an image (jpg, jpeg, png) and less than 2MB.
                     </div>
                   </div>
@@ -298,21 +281,6 @@ export default function CatForm({ show, handleClose }) {
                 onChange={handleChange}
                 placeholder="Oregon"
               />
-
-              {/* <div className="mb-4">
-                <label htmlFor="formCatDescription" className="flex">
-                  Description
-                </label>
-                <textarea
-                  id="formCatDescription"
-                  name="description"
-                  value={catInfo.description}
-                  onChange={handleChange}
-                  className="focus:outline-accent mt-1 w-full rounded-md border border-gray-400 p-1 px-2 shadow-sm placeholder:text-sm"
-                  placeholder="This is a description of the cat..."
-                  required
-                />
-              </div> */}
               {error && <p className="mb-2 text-red-600">{error}</p>}
             </>
           )}
@@ -337,15 +305,6 @@ export default function CatForm({ show, handleClose }) {
                 Next
               </button>
             )}
-            {/* {step > 1 && step < 3 && (
-              <button
-                type="button"
-                onClick={handleNext}
-                className="rounded-md bg-blue-500 px-4 py-2 text-white"
-              >
-                Next
-              </button>
-            )} */}
             {step === 2 && (
               <button
                 type="submit"
