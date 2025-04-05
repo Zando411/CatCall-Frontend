@@ -18,14 +18,16 @@ export default function AuthForm({ toggleFunc }) {
     try {
       setLoading(true);
       e.preventDefault();
+      const normalizedEmail = email.trim().toLowerCase();
+      const normalizedPassword = password.trim();
       const userCheck = await axios.post(`${AUTH_URL}/api/checkUser`, {
-        email,
+        email: normalizedEmail,
       });
 
       if (userCheck.data.message === "User exists") {
         const loginResponse = await axios.post(`${AUTH_URL}/api/login`, {
-          email,
-          password,
+          email: normalizedEmail,
+          password: normalizedPassword,
         });
 
         if (loginResponse.data.message !== "Login successful") {
@@ -40,7 +42,7 @@ export default function AuthForm({ toggleFunc }) {
       }
 
       setLoading(false);
-      login(email);
+      login(normalizedEmail);
       setError("");
       navigate("/dashboard");
     } catch (error) {

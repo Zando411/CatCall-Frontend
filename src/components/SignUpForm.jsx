@@ -18,8 +18,10 @@ export default function AuthForm({ toggleFunc }) {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      const normalizedEmail = email.trim().toLowerCase();
+      const normalizedPassword = password.trim();
       const userCheck = await axios.post(`${AUTH_URL}/api/checkUser`, {
-        email,
+        email: normalizedEmail,
       });
 
       if (userCheck.data.message === "User exists") {
@@ -29,8 +31,8 @@ export default function AuthForm({ toggleFunc }) {
         return;
       } else if (userCheck.data.message === "User does not exist") {
         const signUpResponse = await axios.post(`${AUTH_URL}/api/signup`, {
-          email,
-          password,
+          email: normalizedEmail,
+          password: normalizedPassword,
         });
 
         if (signUpResponse.data.message !== "User created successfully") {
@@ -40,11 +42,11 @@ export default function AuthForm({ toggleFunc }) {
 
         // create favorites for user
         await axios.post(`${FAVORITES_SERVICE_URL}/api/favorites/newUser`, {
-          userID: email,
+          userID: normalizedEmail,
         });
       }
 
-      login(email);
+      login(normalizedEmail);
       setError("");
       navigate("/dashboard");
     } catch (error) {
