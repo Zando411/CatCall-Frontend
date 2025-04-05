@@ -27,7 +27,7 @@ export default function AuthPage() {
       </div>
 
       {/* Right Side (Sign-In Form) */}
-      <div className="mx-auto flex h-full flex-col items-center justify-center bg-white p-4 lg:w-1/2">
+      <div className="mx-auto mt-8 flex h-full flex-col items-center bg-white p-4 lg:mt-0 lg:w-1/2 lg:justify-center">
         <NavLink to="/" end>
           <img src={logo} alt="CatCall Logo" className="mb-4 w-96" />
         </NavLink>

@@ -54,7 +54,6 @@ export default function CatCards() {
   // Handle Like & Dislike actions (Moves to next cat)
   const handleAction = (liked) => {
     if (cats[currentIndex]) {
-      
       // send like to microservice
       if (liked) {
         axios.post(`${FAVORITES_SERVICE_URL}/api/favorites`, {
@@ -95,7 +94,7 @@ export default function CatCards() {
             <img
               src={`${CAT_DB_URL}/api/catImage/${cats[currentIndex].owner}/${cats[currentIndex]._id}`}
               alt={cats[currentIndex].name}
-              className="h-72 w-full object-cover object-center sm:h-96"
+              className="h-56 w-full object-cover object-center sm:h-96"
               draggable="false"
             />
           </div>
