@@ -1,9 +1,20 @@
 import heroImage from "../assets/heroImage.jpg";
 import logo from "../assets/logo.svg";
 import { NavLink } from "react-router-dom";
-import AuthForm from "../components/AuthForm";
+import SignUpForm from "../components/SignUpForm";
+import SignInForm from "../components/SignInForm";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export default function AuthPage() {
+  const [searchParams] = useSearchParams();
+  const formType = searchParams.get("form") || "login";
+  const [currentForm, setCurrentForm] = useState(formType);
+
+  const toggle = () => {
+    setCurrentForm((prevForm) => (prevForm === "login" ? "signup" : "login"));
+  };
+
   return (
     <div className="flex h-screen w-screen">
       {/* Left Side (Full-Height Image) */}
@@ -20,7 +31,11 @@ export default function AuthPage() {
         <NavLink to="/" end>
           <img src={logo} alt="CatCall Logo" className="mb-4 w-96" />
         </NavLink>
-        <AuthForm />
+        {currentForm === "signup" ? (
+          <SignUpForm toggleFunc={toggle} />
+        ) : (
+          <SignInForm toggleFunc={toggle} />
+        )}
       </div>
     </div>
   );

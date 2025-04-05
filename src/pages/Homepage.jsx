@@ -19,11 +19,21 @@ export default function Homepage() {
                   Your <span className="text-accent">purrrr</span>fect cat is
                   just a <span className="text-secondary">like</span> away
                 </h2>
-                <NavLink to="/auth" end>
-                  <Button className={"primary"} defaults={true}>
-                    Sign In
-                  </Button>
-                </NavLink>
+                <div className="flex flex-row gap-2">
+                  <NavLink to="/auth?form=login" end>
+                    <Button
+                      className="hover:bg-secondary bg-gray-200"
+                      defaults={true}
+                    >
+                      Sign in
+                    </Button>
+                  </NavLink>
+                  <NavLink to="/auth?form=signup" end>
+                    <Button className={"primary"} defaults={true}>
+                      Join Now
+                    </Button>
+                  </NavLink>
+                </div>
               </div>
             </div>
             {/* right half of hero */}
