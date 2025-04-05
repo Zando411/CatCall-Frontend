@@ -4,9 +4,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const AUTH_URL = import.meta.env.VITE_AUTH_URL;
-const FAVORITES_SERVICE_URL = import.meta.env.VITE_FAVORITES_SERVICE_URL;
 
-export default function AuthForm() {
+export default function AuthForm({ toggleFunc }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -33,40 +32,32 @@ export default function AuthForm() {
           setError(loginResponse.data.message);
           return;
         }
-      } else if (userCheck.data.message === "User does not exist") {
-        const signUpResponse = await axios.post(`${AUTH_URL}/api/signup`, {
-          email,
-          password,
-        });
-
-        if (signUpResponse.data.message !== "User created successfully") {
-          setError(signUpResponse.data.message);
-          return;
-        }
-
-        // create favorites for user
-        await axios.post(`${FAVORITES_SERVICE_URL}/api/favorites/newUser`, {
-          userID: email,
-        });
+      } else {
+        setError(
+          "We couldn't log you in with those credentials. If you don't have an account, please sign up.",
+        );
+        return;
       }
+
       setLoading(false);
       login(email);
       setError("");
       navigate("/dashboard");
     } catch (error) {
-      setLoading(false);
       if (error.response) {
         setError(error.response.data.message); // Display error from server
       } else {
         setError("An error occurred while logging in");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-      <div>
-        <div className="text-center">
+      <div className="w-full max-w-sm">
+        <div className="w-full text-center">
           <h1 className="text-2xl">Sign in to your account</h1>
           <h3 className="font-medium">
             Enter your email and password below to sign in
@@ -130,6 +121,15 @@ export default function AuthForm() {
               Sign In
             </span>
           </button>
+          <p className="text-sm font-medium text-gray-500">
+            Need to make an account?{" "}
+            <span
+              className="text-accent cursor-pointer underline"
+              onClick={toggleFunc}
+            >
+              Sign Up
+            </span>
+          </p>
           <p className="text-red-600">{error}</p>
         </form>
       </div>
