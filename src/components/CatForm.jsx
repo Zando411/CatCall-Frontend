@@ -81,37 +81,37 @@ export default function CatForm({ show, handleClose }) {
     e.preventDefault();
     setLoading(true);
 
-    if (photoError !== null) {
-      setError(photoError);
-      return;
-    }
-
-    if (
-      !catInfo.name ||
-      !catInfo.age ||
-      !catInfo.sex ||
-      !catInfo.breed ||
-      !catInfo.city ||
-      !catInfo.state ||
-      !catInfo.image
-    ) {
-      setError("Please fill out all required fields before submitting.");
-      return;
-    }
-
-    if (catInfo.age < 0 || catInfo.age > 30) {
-      setError("Please enter a valid age (between 0 and 30)");
-      return;
-    }
-
-    // all form data fields need to be before image is parsed
-    const formData = new FormData();
-    formData.append("owner", userID.toString());
-    Object.entries(catInfo).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-
     try {
+      if (photoError !== null) {
+        setError(photoError);
+        return;
+      }
+
+      if (
+        !catInfo.name ||
+        !catInfo.age ||
+        !catInfo.sex ||
+        !catInfo.breed ||
+        !catInfo.city ||
+        !catInfo.state ||
+        !catInfo.image
+      ) {
+        setError("Please fill out all required fields before submitting.");
+        return;
+      }
+
+      if (catInfo.age < 0 || catInfo.age > 30) {
+        setError("Please enter a valid age (between 0 and 30)");
+        return;
+      }
+
+      // all form data fields need to be before image is parsed
+      const formData = new FormData();
+      formData.append("owner", userID.toString());
+      Object.entries(catInfo).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
       const response = await axios.post(
         `${CAT_DB_URL}/api/uploadCat`,
         formData,
@@ -125,11 +125,11 @@ export default function CatForm({ show, handleClose }) {
       if (response.data.message === "Cat uploaded") {
         closeForm();
       }
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
-      console.error("Error:", error.response.data.error);
+      console.error("Error:", error.response?.data?.error || error.message);
       setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -308,9 +308,34 @@ export default function CatForm({ show, handleClose }) {
             {step === 2 && (
               <button
                 type="submit"
-                className="text-mitten-white bg-accent hover:bg-accent-dark cursor-pointer rounded-md px-4 py-2 transition-all duration-200 hover:scale-105"
+                className={`text-mitten-white bg-accent hover:bg-accent-dark group cursor-pointer rounded-md px-4 py-2 transition-all duration-200 hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed disabled:opacity-70`}
+                disabled={loading}
               >
-                Submit
+                <span className="relative flex items-center gap-2">
+                  Upload
+                  {loading ? (
+                    <svg
+                      className="hidden size-4 text-white group-disabled:block group-disabled:animate-spin"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                  ) : null}
+                </span>
               </button>
             )}
           </div>
