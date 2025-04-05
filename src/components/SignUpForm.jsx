@@ -95,7 +95,7 @@ export default function AuthForm({ toggleFunc }) {
             />
           </div>
           <button
-            className={`bg-accent group mt-1 flex w-full cursor-pointer items-center justify-center rounded px-6 py-1 font-medium text-white disabled:opacity-70`}
+            className={`bg-accent group mt-1 flex w-full cursor-pointer items-center justify-center rounded px-6 py-1 font-medium text-white disabled:cursor-not-allowed disabled:opacity-70`}
             disabled={loading}
             type="submit"
           >
