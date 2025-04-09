@@ -13,7 +13,13 @@ export default function Homepage() {
             <div className="col-span-7">
               <div className="flex w-fit flex-col items-end justify-center gap-2">
                 <NavLink to="/" end>
-                  <img src={logo} alt="CatCall Logo" className="" />
+                  <img
+                    src={logo}
+                    alt="CatCall Logo"
+                    width={780}
+                    height={230}
+                    className="h-auto w-full max-w-[780px]"
+                  />
                 </NavLink>
                 <h2 className="text-3xl font-extrabold">
                   Your <span className="text-accent">purrrr</span>fect cat is
@@ -38,11 +44,15 @@ export default function Homepage() {
             </div>
             {/* right half of hero */}
             <div className="col-span-5 hidden lg:block">
-              <img
-                src={heroImage}
-                alt="Picture of a very handsome cat"
-                className="border-accent rounded-4xl border-16"
-              />
+              <div className="aspect-[550/700] w-full">
+                <img
+                  src={heroImage}
+                  width={550}
+                  height={700}
+                  alt="Picture of a very handsome cat"
+                  className="border-accent h-full w-full rounded-4xl border-16 object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
